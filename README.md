@@ -1,6 +1,6 @@
 # Nimson Muriuki: Portfolio
 
-A one-page portfolio served by a small Express server.
+A one-page portfolio with a static front end and a serverless contact form on Vercel. A small Express server is included for local development.
 
 ## Run it
 
@@ -15,7 +15,10 @@ Set a different port with `PORT=8080 npm start`. Requires Node 20 or newer.
 ## Structure
 
 ```
-server.js            Express server (static files, gzip, cache headers)
+server.js            Local Express server (not used on Vercel)
+api/contact.js       Vercel serverless function for the contact form
+lib/contact-mail.js  Shared form validation and Nodemailer sending
+vercel.json          Vercel config (static output directory, headers)
 package.json
 public/
   index.html         Page markup
@@ -64,10 +67,30 @@ SMTP_PASS=your-password
 
 Optional: `CONTACT_TO` sets the destination inbox and `CONTACT_FROM` sets the From address. Both default to the Gmail/SMTP user.
 
-If email is not configured, or a send fails, the forms automatically fall back to Gmail/mailto with a Copy button, so a visitor can still reach you.
+If email is not configured, or a send fails, the form shows an error on the page.
+
+## Deploying to Vercel
+
+The site runs on Vercel as a static site plus one serverless function:
+
+- `public/` is served as the site (`outputDirectory` in `vercel.json`).
+- `api/contact.js` handles `POST /api/contact`.
+- `server.js` is for local development only; Vercel never runs it.
+
+Set the project's framework preset to **Other** with the repo root as the root directory. `vercel.json` sets the output directory to `public/`, and Vercel automatically deploys `api/contact.js` as the function behind `POST /api/contact`.
+
+Then add the mail variables under **Settings → Environment Variables**:
+
+- `GMAIL_USER`
+- `GMAIL_APP_PASSWORD`
+
+Or use the SMTP variables instead: `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`. Optional: `CONTACT_TO` and `CONTACT_FROM`.
+
+`.env` is git-ignored and is never uploaded, so the variables must be set in the Vercel dashboard. Redeploy after adding or changing them.
 
 ## Notes
 
 - `.env` is git-ignored. Never commit real app passwords.
+- The contact form uses in-memory rate limiting, which is per serverless instance on Vercel; it deters casual spam but is not a hard guarantee.
 - Fonts load from Google Fonts. For offline use, download them and add `@font-face` rules to `styles.css`.
 # portfolio

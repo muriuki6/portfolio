@@ -70,7 +70,7 @@ $("#xa").innerHTML=`<p class="mlg-cap" aria-hidden="true"><span>~/nimson <b>$</b
 if(!mq)new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("run");ob.unobserve(e.target)}}),{threshold:.15}).observe($("#xa"));
 const TESTI=[]; // add real ones: {q:"quote",n:"Name",r:"Role"}
 $("#tq").innerHTML=(TESTI.length?`<div class="qt" style="margin-top:34px">${TESTI.map(t=>`<figure class="qc"><span class="qm">“</span><blockquote>${esc(t.q)}</blockquote><figcaption><b>${esc(t.n)}</b> ${esc(t.r||"")}</figcaption></figure>`).join("")}</div>`:"")+`<form class="pcd" id="tf" novalidate><div class="pcl"><span class="mo">Postcard · Nairobi, Kenya</span><textarea name="tm" rows="6" placeholder="Dear Nimson, …" aria-label="Your words"></textarea></div><div class="pcr"><div class="stp" aria-hidden="true"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#0a0a0a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 7l8.5 6.5L20.5 7"/></svg></div><div class="pm" aria-hidden="true"></div><p class="to">To: <b>Nimson Muriuki</b><br>Nairobi, Kenya</p><label class="mo">From<input name="tn" autocomplete="name" placeholder="Your name"></label><label class="mo">Role or company<input name="tr" placeholder="Optional"></label><label class="mo">Email <span style="text-transform:none;letter-spacing:0;opacity:.6">(optional)</span><input name="temail" type="email" autocomplete="email" placeholder="you@example.com"></label><span class="err" id="te" role="status"></span><button class="btn" type="submit">Send postcard →</button></div></form>`;
-$("#tf").addEventListener("submit",async ev=>{ev.preventDefault();const f=ev.target,v=k=>f.elements[k].value.trim(),e=$("#te"),btn=f.querySelector('button[type="submit"]');const name=v("tn"),msg=v("tm"),role=v("tr"),email=v("temail");e.className="err";if(name.length<2||msg.length<10){e.textContent="Add your name and a few words (10+ characters).";return}if(email&&!EM.test(email)){e.textContent="That email address doesn’t look right.";f.elements.temail.focus();return}const body=msg+"\n\n"+name+(role?" · "+role:"");btn.disabled=true;btn.textContent="Sending…";const r=await sendContact({type:"postcard",name,email,role,subject:"Testimonial for Nimson",message:msg});btn.disabled=false;btn.textContent="Send postcard →";if(r.ok){f.reset();e.className="sendbox sent-ok";e.textContent="✓ Postcard sent. Thank you, "+name+" — it’s on its way to Nimson’s inbox.";return}sendBox(e,"Testimonial for Nimson",body,r.code=="not_configured"?"Direct sending isn’t set up on this server yet, so choose how to send it:":(r.error||"Couldn’t send it directly, so choose how to send it:"))});
+$("#tf").addEventListener("submit",async ev=>{ev.preventDefault();const f=ev.target,v=k=>f.elements[k].value.trim(),e=$("#te"),btn=f.querySelector('button[type="submit"]');const name=v("tn"),msg=v("tm"),role=v("tr"),email=v("temail");e.className="err";if(name.length<2||msg.length<10){e.textContent="Add your name and a few words (10+ characters).";return}if(email&&!EM.test(email)){e.textContent="That email address doesn’t look right.";f.elements.temail.focus();return}const body=msg+"\n\n"+name+(role?" · "+role:"");btn.disabled=true;btn.textContent="Sending…";const r=await sendContact({type:"postcard",name,email,role,subject:"Testimonial for Nimson",message:msg});btn.disabled=false;btn.textContent="Send postcard →";if(r.ok){f.reset();e.className="sendbox sent-ok";e.textContent="✓ Postcard sent. Thank you, "+name+" — it’s on its way to Nimson’s inbox.";return}sendBox(e,"Testimonial for Nimson",body,r.code=="not_configured"?"Sending isn’t set up on this server yet. Please try again later.":(r.error||"The postcard couldn’t be sent right now. Please try again."))});
 const pl=$("#pl"),ind=$("#ind"),pls=[...pl.querySelectorAll("a")],cur=()=>pls.find(a=>a.hasAttribute("aria-current"));
 function place(a){pls.forEach(x=>x.classList.toggle("on",x==a));if(a){ind.style.opacity=1;ind.style.width=a.offsetWidth+"px";ind.style.transform=`translateX(${a.offsetLeft}px)`}else ind.style.opacity=0}
 pl.addEventListener("mouseover",e=>{const a=e.target.closest("a");if(a)place(a)});pl.addEventListener("mouseleave",()=>place(cur()));
@@ -82,12 +82,10 @@ const clk2=()=>{const t=new Date().toLocaleTimeString("en-GB",{timeZone:"Africa/
 $("#fname").innerHTML=[..."Nimson Muriuki"].map(c=>c==" "?'<span style="width:.28em"></span>':`<span>${c}</span>`).join("");
 $("#fsoc").innerHTML=(EMAIL?'<a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to='+EMAIL+'" target="_blank" rel="noopener noreferrer">Email ↗</a>':"")+SOC.map(s=>`<a href="${s[1]}" target="_blank" rel="noopener noreferrer">${s[0]} ↗</a>`).join("");
 async function sendContact(data){try{const o={method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)};if(typeof AbortSignal!="undefined"&&AbortSignal.timeout)o.signal=AbortSignal.timeout(15000);const r=await fetch("/api/contact",o);let j={};try{j=await r.json()}catch(x){}return{ok:r.ok&&j.ok===true,code:j.code||"",error:j.error||""}}catch(x){return{ok:false,code:"network",error:"Couldn’t reach the server."}}}
-function sendBox(el,subject,body,note){const g="https://mail.google.com/mail/?view=cm&fs=1&to="+encodeURIComponent(EMAIL)+"&su="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body),m="mailto:"+EMAIL+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
-el.className="sendbox";el.textContent="";const p=document.createElement("span");p.textContent=note||("Ready. Choose how to send it to "+EMAIL+":");const w=document.createElement("span");w.className="sbt";
-const A=(t,u)=>{const a=document.createElement("a");a.className="btn";a.href=u;a.target="_blank";a.rel="noopener noreferrer";a.textContent=t;return a};
+function sendBox(el,subject,body,note){el.className="sendbox";el.textContent="";const p=document.createElement("span");p.textContent=note||"The postcard couldn’t be sent right now. Please try again.";const w=document.createElement("span");w.className="sbt";
 const c=document.createElement("button");c.type="button";c.className="btn";c.textContent="Copy message";
 c.onclick=async()=>{const t="To: "+EMAIL+"\nSubject: "+subject+"\n\n"+body;try{await navigator.clipboard.writeText(t);c.textContent="Copied ✓"}catch(x){const ta=document.createElement("textarea");ta.readOnly=true;ta.value=t;ta.rows=5;el.appendChild(ta);ta.select();c.textContent="Copy it from the box"}};
-w.append(A("Open in Gmail ↗",g),A("Email app ↗",m),c);el.append(p,w)}
+w.append(c);el.append(p,w)}
 (()=>{const f=$("#f"),body=f.querySelector(".cf-body"),done=$("#ok"),go=$("#sd"),lab=go.firstElementChild,ct=$("#cf-ct");
 const V={n:v=>v.length>1||"Please enter your name.",e:v=>EM.test(v)||"Enter a valid email address.",m:v=>v.length>9||"Tell me a little more (10+ characters)."};
 const val=k=>{const el=f.elements[k],r=V[k](el.value.trim()),ok=r===true;el.setAttribute("aria-invalid",String(!ok));el.closest(".cf-f").querySelector(".err").textContent=ok?"":r;return ok};
@@ -97,8 +95,8 @@ const mk=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=nu
 const topicOf=()=>(f.querySelector("[name=t]:checked")||{}).value||"";
 function show(sent,note){const v=k=>f.elements[k].value.trim(),topic=topicOf();
 const su=v("s")||(topic?topic+" inquiry":"Hello from your portfolio"),bd=(topic?"Topic: "+topic+"\n\n":"")+v("m")+"\n\n"+v("n")+" ("+v("e")+")";
-done.textContent="";const ic=mk("div","cf-ic");ic.innerHTML='<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#0a0a0a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
-const h=mk("h3","",sent?"Message sent.":"Your message is ready.");h.tabIndex=-1;
+done.textContent="";const ic=mk("div","cf-ic");ic.innerHTML=sent?'<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#0a0a0a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>':'<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#0a0a0a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg>';
+const h=mk("h3","",sent?"Message sent.":"Message not sent.");h.tabIndex=-1;
 const sum=mk("dl","cf-sum");[["To",EMAIL],["Subject",su],["Message",bd]].forEach(([k,x])=>{sum.append(mk("dt","",k),mk("dd","",x))});
 const row=mk("div","cf-acts");
 if(sent){
@@ -107,14 +105,11 @@ again.onclick=()=>{done.hidden=true;body.hidden=false;f.reset();ct.textContent="
 row.append(again);
 done.append(ic,h,mk("p","cf-note",note||("Thanks, "+v("n")+". Your message landed in Nimson’s inbox — he’ll reply to "+v("e")+".")),sum,row);
 }else{
-const g="https://mail.google.com/mail/?view=cm&fs=1&to="+encodeURIComponent(EMAIL)+"&su="+encodeURIComponent(su)+"&body="+encodeURIComponent(bd),
-ml="mailto:"+EMAIL+"?subject="+encodeURIComponent(su)+"&body="+encodeURIComponent(bd);
-const A=(t,u,p)=>{const a=mk("a","cf-b"+(p?" p":""),t);a.href=u;a.target="_blank";a.rel="noopener noreferrer";return a};
-const cp=mk("button","cf-b","Copy message");cp.type="button";
-cp.onclick=async()=>{const t="To: "+EMAIL+"\nSubject: "+su+"\n\n"+bd;try{await navigator.clipboard.writeText(t);cp.textContent="Copied ✓"}catch(x){const ta=mk("textarea","cf-ta");ta.readOnly=true;ta.value=t;ta.rows=5;done.append(ta);ta.select();cp.textContent="Copy it from the box"}};
-row.append(A("Open in Gmail ↗",g,1),A("Email app ↗",ml),cp);
+const retry=mk("button","cf-b p","Try again");retry.type="button";
+retry.onclick=()=>{done.hidden=true;body.hidden=false;go.disabled=false;lab.textContent="Send message";f.requestSubmit()};
 const ed=mk("button","cf-edit","← Edit message");ed.type="button";ed.onclick=()=>{done.hidden=true;body.hidden=false;f.elements.m.focus()};
-done.append(ic,h,mk("p","cf-note",note||"Choose where to send it from. Nothing leaves your device until you press send there."),sum,row,ed)}
+row.append(retry);
+done.append(ic,h,mk("p","cf-note",note||"The message couldn’t be sent right now. Please try again."),sum,row,ed)}
 body.hidden=true;done.hidden=false;h.focus({preventScroll:true});if(!mq)done.scrollIntoView({block:"center",behavior:"smooth"})}
 f.addEventListener("submit",async ev=>{ev.preventDefault();if(f.elements.hp.value)return;
 const bad=["n","e","m"].filter(k=>!val(k));if(bad.length){f.elements[bad[0]].focus();return}
@@ -124,4 +119,4 @@ const v=k=>f.elements[k].value.trim(),topic=topicOf();
 const r=await sendContact({type:"message",name:v("n"),email:v("e"),subject:v("s"),topic,message:v("m")});
 go.disabled=false;lab.textContent="Send message";
 if(r.ok){show(true);return}
-show(false,r.code=="not_configured"?"Direct sending isn’t set up on this server yet. Your message is ready to send with Gmail or your email app below.":(r.error||"The message couldn’t be sent directly. Choose how to send it below."))})})();
+show(false,r.code=="not_configured"?"Sending isn’t set up on this server yet. Please try again later.":(r.error||"The message couldn’t be sent right now. Please try again."))})})();
