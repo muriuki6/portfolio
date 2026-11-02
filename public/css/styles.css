@@ -572,3 +572,39 @@ footer{padding:0 0 28px}.fsk{background:var(--or);line-height:0;height:70px}.fsk
 .mlg-x.run .mlg-i{animation:lgin .6s cubic-bezier(.2,.9,.3,1) backwards;animation-delay:calc(var(--n)*120ms)}
 @media (max-width:640px){.mlg-x{--g0:10px;--g1:30px;--gw:50px}.mlg-bd{flex-direction:column;align-items:stretch}.mlg-bd img{width:70%}.mlg-top span{margin-left:0;width:100%}.mlg-i .mlg-cv{border-bottom-left-radius:14px}}
 @media (prefers-reduced-motion:reduce){.mlg-x.run .mlg-i{animation:none}.mlg-i.mlg-hd .mlg-nd{animation:none}.mlg-k{transition:none}}
+@keyframes gpulse{50%{box-shadow:0 0 0 9px transparent}}
+/* ===== About extras ===== */
+.abx{margin-top:clamp(56px,8vw,100px);display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:20px}
+.abx-facts{grid-column:1/-1;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));border-block:1px solid var(--ln)}
+.abx-f{padding:20px 22px;border-left:1px solid var(--ln);display:grid;gap:6px;align-content:start}.abx-f:first-child{border-left:0;padding-left:0}
+.abx-f dt{color:var(--mut)}.abx-f dd{margin:0;font:700 clamp(1.05rem,1.8vw,1.35rem)/1.15 "Space Grotesk",sans-serif;letter-spacing:-.02em}
+.abx-f small{color:var(--mut);font-size:.8rem;line-height:1.35}
+.abx-h{margin:0 0 18px;color:var(--or)}
+.abx-now{grid-column:1/6;background:var(--or);color:#0a0a0a;border-radius:24px;padding:28px clamp(20px,3vw,32px) 30px;display:flex;flex-direction:column;gap:20px}
+.abx-now h3{margin:0;color:#0a0a0a;display:flex;align-items:center;gap:10px}
+.abx-now h3 i{width:10px;height:10px;border-radius:50%;background:#0a0a0a;animation:gpulse 2s infinite}
+.abx-now ul{list-style:none;margin:0;padding:0;display:grid;gap:18px}
+.abx-now li{display:grid;gap:4px;padding-top:16px;border-top:1.5px solid rgba(10,10,10,.28)}.abx-now li:first-child{border-top:0;padding-top:0}
+.abx-now li .mo{opacity:.65}
+.abx-now li b{font:700 clamp(1.3rem,2.4vw,1.8rem)/1.05 "Space Grotesk",sans-serif;letter-spacing:-.03em;text-transform:uppercase}
+.abx-now li small{font-size:.92rem;line-height:1.4;color:#1c1a17}
+.abx-cta{align-self:flex-start;margin-top:auto;background:#0a0a0a;color:var(--bone);padding:13px 22px;border-radius:999px;font:700 .88rem Manrope,sans-serif;text-decoration:none;transition:transform .2s}.abx-cta:hover{transform:translateY(-2px)}
+.abx-val{grid-column:6/13;display:grid;grid-template-columns:1fr 1fr;gap:14px;align-content:start}
+.abx-val .abx-h{grid-column:1/-1;margin-bottom:4px}
+.abx-val article{border:1px solid var(--ln);border-radius:18px;padding:22px;background:#101010;transition:border-color .25s,transform .25s}
+.abx-val article:hover{border-color:var(--or);transform:translateY(-4px)}
+.abx-val h4{margin:0 0 8px;font:700 1.15rem/1.1 "Space Grotesk",sans-serif;letter-spacing:-.02em;text-transform:uppercase}
+.abx-val p{margin:0;color:#c9c3b9;font-size:.92rem;line-height:1.5}
+.abx-sk{grid-column:1/8}
+.abx-row{display:grid;grid-template-columns:78px 1fr;gap:14px;align-items:start;padding:16px 0;border-top:1px solid var(--ln)}
+.abx-row>.mo{color:var(--mut);padding-top:7px}
+.abx-in{grid-column:8/13}
+.abx-in ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+.abx-in li{font:700 clamp(.95rem,1.5vw,1.15rem) "Space Grotesk",sans-serif;letter-spacing:-.02em;padding:11px 18px;border-radius:999px;border:1.5px solid var(--bone);transition:background .2s,color .2s,transform .2s}
+.abx-in li:nth-child(even){border-color:var(--or);color:var(--or)}
+.abx-in li:hover{background:var(--bone);color:#0a0a0a;transform:rotate(-2deg)}
+@media (max-width:1000px){.abx-now,.abx-val,.abx-sk,.abx-in{grid-column:1/-1}}
+@media (max-width:560px){.abx-val{grid-template-columns:1fr}.abx-row{grid-template-columns:1fr;gap:6px}.abx-row>.mo{padding-top:0}.abx-f{border-left:0;border-top:1px solid var(--ln);padding-left:0}.abx-f:first-child{border-top:0}}
+@media (prefers-reduced-motion:reduce){.abx-now h3 i{animation:none}}
+
+@media (min-width:1001px){.abx-now{grid-row:2/4}.abx-val{grid-row:2}.abx-sk{grid-column:6/13;grid-row:3}.abx-in{grid-column:1/-1;grid-row:4;margin-top:10px}.abx-sk .abx-row:first-of-type{border-top:1px solid var(--ln)}}
