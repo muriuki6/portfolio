@@ -31,7 +31,7 @@ Most content lives at the top of `public/js/app.js`:
 | Constant | What it controls |
 | --- | --- |
 | `EMAIL` | Contact email used by the form and footer |
-| `SOC` | Social links. Empty links are hidden, so add LinkedIn, Instagram, X or WhatsApp URLs here |
+| `SOC` | Direct-contact links shown in the contact form and footer: `[label, url, icon]`. Empty links are hidden, so fill in WhatsApp, Telegram, LinkedIn, Instagram, X or Facebook URLs here |
 | `EX` | The seven "ways I build" entries |
 | `ST` | Tech stack groups and tools |
 | `PR` | Projects (name, category, status, description, tech, GitHub link, screenshots) |
