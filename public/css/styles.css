@@ -651,6 +651,49 @@ header .w::after{content:"";position:absolute;left:26px;right:26px;bottom:-1px;h
 @media (max-width:420px){.lg span{display:none}}
 @media (prefers-reduced-motion:reduce){.nvo>a,.cl2::before{transition:none;animation:none}header .w,.cb::after{transition:none}}
 
+/* ===== Navbar v2: floating glass bar ===== */
+header{background:none;height:72px}
+header::after{display:none}
+header .w{position:relative;max-width:min(1240px,calc(100% - 28px));height:54px;margin-top:9px;padding:0 6px 0 14px;border-radius:999px;background:rgba(14,14,14,.58);-webkit-backdrop-filter:blur(18px) saturate(1.5);backdrop-filter:blur(18px) saturate(1.5);border:1px solid rgba(237,232,223,.11);box-shadow:0 14px 40px -18px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.05);transition:background .35s,box-shadow .35s,height .35s,margin .35s}
+header.sc .w{background:rgba(10,10,10,.82);height:50px;margin-top:11px;box-shadow:0 18px 44px -16px rgba(0,0,0,1),inset 0 1px 0 rgba(255,255,255,.06)}
+/* scroll progress now runs along the bottom edge of the bar */
+header .w::after{content:"";position:absolute;left:26px;right:26px;bottom:-1px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--or) var(--pg,0%),transparent var(--pg,0%));opacity:.9;pointer-events:none}
+.lg{gap:10px}
+.lg span{white-space:nowrap}
+.pill{background:transparent;border:0;padding:0;gap:0}
+.pill a{padding:9px 14px;font-size:.83rem;color:#a9a39a}
+.pill a:hover{color:var(--bone)}
+.pill a.on{color:#0a0a0a}
+.ind{top:0;bottom:0;box-shadow:0 6px 18px -6px rgba(255,91,20,.7)}
+.hr{gap:12px}
+.cl2{display:flex;align-items:center;gap:8px;font-size:.7rem;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(237,232,223,.08)}
+.cl2::before{content:"";width:7px;height:7px;border-radius:50%;background:#3ddc97;box-shadow:0 0 0 0 rgba(61,220,151,.6);animation:navlive 2s infinite}
+@keyframes navlive{70%{box-shadow:0 0 0 7px rgba(61,220,151,0)}100%{box-shadow:0 0 0 0 rgba(61,220,151,0)}}
+.cb{display:inline-flex;align-items:center;gap:12px;background:var(--or);color:#0a0a0a;padding:5px 5px 5px 18px;font-size:.84rem;font-weight:700}
+.cb::after{content:"↗";display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#0a0a0a;color:var(--bone);font-size:1rem;transition:transform .35s cubic-bezier(.3,1.5,.5,1),background .2s,color .2s}
+.cb:hover{background:var(--bone)}
+.cb:hover::after{transform:rotate(45deg);background:var(--or);color:#0a0a0a}
+@media (max-width:1240px){.cl2{display:none}}
+/* mobile / tablet */
+#mb{display:none;align-items:center;gap:10px;background:var(--or);color:#0a0a0a;font:600 .74rem "IBM Plex Mono",monospace;letter-spacing:.08em;padding:0 18px 0 16px;min-height:42px}
+#mb::before{content:"";width:14px;height:10px;background:linear-gradient(currentColor,currentColor) top/100% 2px no-repeat,linear-gradient(currentColor,currentColor) bottom/100% 2px no-repeat}
+#mb[aria-expanded=true]::before{height:14px;background:linear-gradient(45deg,transparent 43%,currentColor 43% 57%,transparent 57%),linear-gradient(-45deg,transparent 43%,currentColor 43% 57%,transparent 57%)}
+@media (max-width:1100px){
+#mb{display:inline-flex}
+.nvo{inset:0;padding:calc(92px + env(safe-area-inset-top,0px)) 24px calc(28px + env(safe-area-inset-bottom,0px));background:radial-gradient(90% 55% at 100% 100%,rgba(255,91,20,.22),transparent 70%),radial-gradient(70% 40% at 0 0,rgba(255,91,20,.10),transparent 70%),var(--bg)}
+.nvo>a{opacity:0;transform:translateY(22px);transition:opacity .45s,transform .55s cubic-bezier(.2,.9,.3,1),color .2s,padding .25s;font-size:clamp(2rem,9vw,3rem);padding:10px 0}
+.nvo.open>a{opacity:1;transform:none;transition-delay:calc(.18s + var(--i,0)*.045s),calc(.18s + var(--i,0)*.045s),0s,0s}
+.nvo>a:nth-of-type(1){--i:0}.nvo>a:nth-of-type(2){--i:1}.nvo>a:nth-of-type(3){--i:2}.nvo>a:nth-of-type(4){--i:3}.nvo>a:nth-of-type(5){--i:4}.nvo>a:nth-of-type(6){--i:5}.nvo>a:nth-of-type(7){--i:6}.nvo>a:nth-of-type(8){--i:7}
+.nvo>a:hover{color:var(--or);padding-left:10px}
+.nvx{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-top:auto;padding-top:26px}
+.nvx a{font:600 .9rem Manrope,sans-serif;letter-spacing:0;text-transform:none;border:0;padding:12px 20px;border-radius:999px;background:var(--or);color:#0a0a0a;text-decoration:none}
+.nvx a::before{content:none}
+.nvx span{font:500 .78rem "IBM Plex Mono",monospace;color:var(--mut);word-break:break-all}
+.nvf{margin-top:18px;padding-top:0}
+}
+@media (max-width:420px){.lg span{display:none}}
+@media (prefers-reduced-motion:reduce){.nvo>a,.cl2::before{transition:none;animation:none}header .w,.cb::after{transition:none}}
+
 /* ===== Navbar v3 (append AFTER the v2 navbar block) ===== */
 /* progress now wraps the logo badge instead of running along the bar */
 header .w::after{display:none}
@@ -696,3 +739,7 @@ header .w::after{display:none}
 
 /* no numbering anywhere */
 .nvo a::before{content:none!important;margin:0}
+
+/* phones/tablets: the chip is only a "you are here" label; MENU is the single navigation */
+#kb:disabled{color:var(--bone);cursor:default;opacity:1}
+#kb:disabled:hover{border-color:rgba(237,232,223,.1);background:rgba(255,255,255,.04)}
