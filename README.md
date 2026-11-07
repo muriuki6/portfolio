@@ -49,7 +49,7 @@ Images are referenced by relative path (for example `img/photo-3.jpg`), so repla
 The page ships with Open Graph/Twitter tags, JSON-LD (`Person`, `WebSite`, `ProfilePage`), a canonical URL, favicons, a web app manifest, `robots.txt` and a one-page `sitemap.xml`.
 
 - Social preview image: `public/img/og-image.jpg` (1200 × 630, built from the hero portrait).
-- Absolute URLs currently use **`https://nimson.js.org`**. If the production domain changes, update the canonical, Open Graph/Twitter URLs in `public/index.html`, plus `public/robots.txt`, `public/sitemap.xml` and `public/site.webmanifest`.
+- Absolute URLs currently use **`https://nimson.vercel.app`**. If the production domain changes, update the canonical, Open Graph/Twitter and JSON-LD URLs in `public/index.html`, plus `public/robots.txt` and `public/sitemap.xml`.
 - After deploying, test previews with the [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/) and the [X Card Validator](https://cards-dev.twitter.com/validator).
 
 ## Email setup

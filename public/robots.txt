@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://nimson.js.org/sitemap.xml
+Sitemap: https://nimson.vercel.app/sitemap.xml

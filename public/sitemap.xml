@@ -2,12 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://nimson.js.org/</loc>
+    <loc>https://nimson.vercel.app/</loc>
     <lastmod>2026-11-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://nimson.js.org/img/og-image.jpg</image:loc>
+      <image:loc>https://nimson.vercel.app/img/og-image.jpg</image:loc>
       <image:title>Nimson Muriuki, Kenyan digital professional and software developer</image:title>
     </image:image>
   </url>
