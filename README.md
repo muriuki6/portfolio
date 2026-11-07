@@ -44,6 +44,14 @@ Most content lives at the top of `public/js/app.js`:
 
 Images are referenced by relative path (for example `img/photo-3.jpg`), so replace a file in `public/img/` or point an entry at a new one.
 
+## SEO and link previews
+
+The page ships with Open Graph/Twitter tags, JSON-LD (`Person`, `WebSite`, `ProfilePage`), a canonical URL, favicons, a web app manifest, `robots.txt` and a one-page `sitemap.xml`.
+
+- Social preview image: `public/img/og-image.jpg` (1200 × 630, built from the hero portrait).
+- Absolute URLs currently use **`https://nimson.js.org`**. If the production domain changes, update the canonical, Open Graph/Twitter URLs in `public/index.html`, plus `public/robots.txt`, `public/sitemap.xml` and `public/site.webmanifest`.
+- After deploying, test previews with the [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/) and the [X Card Validator](https://cards-dev.twitter.com/validator).
+
 ## Email setup
 
 The contact form and testimonial postcard post to `POST /api/contact`, which sends mail with Nodemailer. Copy `.env.example` to `.env` and fill in **one** of the options.
