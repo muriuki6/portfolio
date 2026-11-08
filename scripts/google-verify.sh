@@ -2,19 +2,31 @@
 # Google Search Console verification helper for this project.
 #
 # Usage:
-#   ./scripts/google-verify.sh html <TOKEN>            # meta tag in public/index.html (recommended here)
-#   ./scripts/google-verify.sh dns <DOMAIN> <TOKEN>    # TXT via Vercel DNS (Vercel-managed zones only)
+#   ./scripts/google-verify.sh html <TOKEN|META_TAG>       # meta tag in public/index.html (recommended)
+#   ./scripts/google-verify.sh dns <DOMAIN> <TOKEN|TXT>    # TXT via Vercel DNS (Vercel-managed zones only)
+#   ./scripts/google-verify.sh check <TOKEN|META_TAG>      # validate/normalize without deploying
 #
-# The token is the verification string from Search Console (the part AFTER
-# "google-site-verification="). Google tokens are normally 43 characters.
+# You can paste the bare token, the full HTML meta tag, or the TXT value
+# ("google-site-verification=..."). Google tokens are normally 43 characters.
 set -euo pipefail
 
 SITE="${SITE:-https://nimson.vercel.app}"
 INDEX="public/index.html"
 
 usage() {
-  sed -n '2,9p' "$0" | sed 's/^# \{0,1\}//'
+  sed -n '2,11p' "$0" | sed 's/^# \{0,1\}//'
   exit 2
+}
+
+normalize_token() {
+  local raw="$1" token
+  if [[ "$raw" == *'content="'* ]]; then
+    token="$(sed -nE 's/.*content="([^"]+)".*/\1/p' <<<"$raw" | head -1)"
+  else
+    token="$raw"
+  fi
+  token="${token#google-site-verification=}"
+  printf '%s' "$token" | tr -d '[:space:]'
 }
 
 check_token() {
@@ -53,10 +65,11 @@ inject_meta() {
 }
 
 verify_http() {
-  local token="$1"
+  local token="$1" body
   echo "Waiting for $SITE to serve the token..."
   for _ in $(seq 1 20); do
-    if curl -fsSL "$SITE/" | grep -qF "content=\"$token\""; then
+    body="$(curl -fsSL "$SITE/" 2>/dev/null || true)"
+    if grep -qF "content=\"$token\"" <<<"$body"; then
       echo "OK: verification tag is live on $SITE"
       return 0
     fi
@@ -67,7 +80,8 @@ verify_http() {
 }
 
 cmd_html() {
-  local token="$1"
+  local token
+  token="$(normalize_token "$1")"
   check_token "$token"
   [[ -f "$INDEX" ]] || { echo "ERROR: $INDEX not found. Run from the repo root." >&2; exit 1; }
 
@@ -82,7 +96,8 @@ cmd_html() {
 }
 
 cmd_dns() {
-  local domain="$1" token="$2"
+  local domain="$1" token
+  token="$(normalize_token "$2")"
   check_token "$token"
 
   # Requires the domain to be added to Vercel AND its nameservers to be Vercel's.
@@ -94,8 +109,10 @@ cmd_dns() {
   vercel dns ls "$domain" --json
 
   echo "Checking public DNS (may take a few minutes to propagate)..."
+  local txt
   for _ in $(seq 1 20); do
-    if dig +short TXT "$domain" | grep -qF "google-site-verification=$token"; then
+    txt="$(dig +short TXT "$domain" 2>/dev/null || true)"
+    if grep -qF "google-site-verification=$token" <<<"$txt"; then
       echo "OK: TXT record is live on $domain"
       return 0
     fi
@@ -105,8 +122,16 @@ cmd_dns() {
   return 1
 }
 
+cmd_check() {
+  local token
+  token="$(normalize_token "$1")"
+  check_token "$token"
+  printf 'Token (%d chars): %s\n' "${#token}" "$token"
+}
+
 case "${1:-}" in
-  html) shift; cmd_html "${1:-}" ;;
-  dns)  shift; [[ $# -eq 2 ]] || usage; cmd_dns "$1" "$2" ;;
+  html)  shift; cmd_html "${1:-}" ;;
+  dns)   shift; [[ $# -eq 2 ]] || usage; cmd_dns "$1" "$2" ;;
+  check) shift; cmd_check "${1:-}" ;;
   *) usage ;;
 esac
