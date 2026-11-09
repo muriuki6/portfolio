@@ -48,8 +48,12 @@ Images are referenced by relative path (for example `img/photo-3.jpg`), so repla
 
 The page ships with Open Graph/Twitter tags, JSON-LD (`Person`, `WebSite`, `ProfilePage`), a canonical URL, favicons, a web app manifest, `robots.txt` and a one-page `sitemap.xml`.
 
-- Social preview image: `public/img/og-image.jpg` (1200 × 630, built from the hero portrait).
+- Hero/entity portrait: `public/img/nimson-muriuki-portrait.webp` (used by the hero `<img>` and the `Person` JSON-LD `image`). Replace this file to update the photo shown in search results.
+- The legacy `public/img/photo-1.webp` path permanently redirects to the portrait (see `vercel.json`), so search engines and old links pick up the new image instead of a cached copy.
+- Social preview image: `public/img/og-image-2.jpg` (1200 × 630, built from the hero portrait).
+- `public/sitemap.xml` includes image entries for the portrait and social preview so Google can recrawl them.
 - Absolute URLs currently use **`https://nimson.vercel.app`**. If the production domain changes, update the canonical, Open Graph/Twitter and JSON-LD URLs in `public/index.html`, plus `public/robots.txt` and `public/sitemap.xml`.
+- To clear a stale Google thumbnail after changing the portrait, deploy and use Search Console → URL Inspection (request indexing) or the **Refresh outdated content** tool for the old image URL.
 - After deploying, test previews with the [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/) and the [X Card Validator](https://cards-dev.twitter.com/validator).
 
 ## Email setup

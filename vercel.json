@@ -4,7 +4,8 @@
   "outputDirectory": "public",
   "redirects": [
     { "source": "/sitemap", "destination": "/sitemap.xml", "permanent": true },
-    { "source": "/sitemap/", "destination": "/sitemap.xml", "permanent": true }
+    { "source": "/sitemap/", "destination": "/sitemap.xml", "permanent": true },
+    { "source": "/img/photo-1.webp", "destination": "/img/nimson-muriuki-portrait.webp", "permanent": true }
   ],
   "headers": [
     {

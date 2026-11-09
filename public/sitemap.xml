@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://nimson.vercel.app/</loc>
-    <lastmod>2026-11-08</lastmod>
+    <lastmod>2026-11-09</lastmod>
     <changefreq>monthly</changefreq>
+    <image:image>
+      <image:loc>https://nimson.vercel.app/img/nimson-muriuki-portrait.webp</image:loc>
+      <image:title>Nimson Muriuki (Nim), Software Developer</image:title>
+      <image:caption>Portrait of Nimson Muriuki (Nim), Kenyan Software Developer based in Nairobi</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://nimson.vercel.app/img/og-image-2.jpg</image:loc>
+      <image:title>Nimson Muriuki (Nim) | Software Developer</image:title>
+      <image:caption>Nimson Muriuki (Nim), Kenyan Software Developer based in Nairobi</image:caption>
+    </image:image>
   </url>
 </urlset>
