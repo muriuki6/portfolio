@@ -11,7 +11,7 @@ const EX=[["code","Software Development","Programs that solve real problems, fro
 ["rocket","Digital Entrepreneurship","Turning ideas into digital products and freelance services.",["Digital business concepts","Freelance services","Idea-to-product thinking"],["Mkenya Asili"]]];
 const ST=[["Frontend","What visitors see and touch",["HTML5","CSS3","JavaScript","React","Next.js","Tailwind CSS","Bootstrap"]],["Programming","The code behind the screens",["Java","Python","C","PHP","Node.js fundamentals"]],["Databases","Where information lives",["MySQL","SQLite","Turso","SQL","Drizzle ORM"]],["Tools","Where the work gets done",["Git","GitHub","VS Code","NetBeans","IntelliJ IDEA","Ubuntu / Linux","Figma","Vercel"]]];
 const PR=[
-{n:"Mkenya Asili",c:"Web",s:"In development",k:"#FF5B14",m:"MA",y:"E-commerce platform",
+{n:"Mkenya Asili",c:"Web",s:"Project",k:"#FF5B14",m:"MA",y:"E-commerce platform",
  d:"A Kenyan artisan e-commerce platform for authentic handmade products, connecting artisans with customers through a modern shopping experience.",
  b:"Built around authentic handmade Kenyan products: a place where artisans’ work can be found and a shopping experience that feels modern to the customer.",
  w:[["Collections","Products grouped so they are easy to browse"],["Accounts","Customer accounts"],["Product management","Adding and updating listings"],["Galleries","More than one view of each product"],["Admin dashboard","One place to run the store"]],
@@ -26,9 +26,9 @@ const PR=[
  b:"A database-driven system that moves a gym’s administration onto the screen and turns its numbers into charts that update as the data changes.",
  w:[["Administration","Digital management of the gym"],["Dynamic charts","Built with Chart.js"],["AJAX","Updates without reloading the whole page"]],
  t:["PHP","MySQL","Bootstrap 5","Chart.js"]},
-{n:"Magical Flix",c:"Media",s:"Concept",k:"#e8a33d",m:"MF",y:"Tourism and storytelling platform",
- d:"A Kenya tourism and storytelling platform concept: destinations, wildlife, reels and local creators.",
- b:"An idea for telling Kenya’s story through the places people visit, the wildlife they hope to see and the creators who live it.",
+{n:"Magical Flix",c:"Media",s:"Project",k:"#e8a33d",m:"MF",y:"Tourism and storytelling platform",
+ d:"A working Kenya tourism and storytelling platform: destinations, wildlife, reels and local creators.",
+ b:"A live platform for telling Kenya’s story through the places people visit, the wildlife they hope to see and the creators who live it.",
  w:[["Guides","Destinations and wildlife"],["Reels","Short visual stories"],["Stories","Told by local creators"]],
  t:["Web platform","Media"]},
 {n:"TradeNex",c:"Software",s:"Concept",k:"#3ddc97",m:"TN",y:"Trading interface concept",
